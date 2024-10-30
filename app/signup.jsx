@@ -22,12 +22,18 @@ const Signup = () => {
           setLoading(false);
           setEmail("");
           setPassword("");
-          //   navigation.navigate("Main");
+            navigation.navigate("main");
         })
         .catch((error) => {
           alert(error.message);
           setLoading(false);
         });
+    } else {
+      Toast.show({
+        type: "error",
+        text1: "Something went wrong!",
+        text2: "Please fill all the fields",
+      });
     }
   };
   return (
