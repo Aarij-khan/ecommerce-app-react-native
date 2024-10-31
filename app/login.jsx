@@ -16,7 +16,10 @@ import {
 } from "react-native-responsive-screen";
 import Toast from "react-native-toast-message";
 import { Image } from "expo-image";
-import { ImageBackground } from "react-native";
+import { useEffect } from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { StatusBar } from "expo-status-bar";
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -36,7 +39,11 @@ const Login = () => {
           router.push("main");
         })
         .catch((error) => {
-          alert(error.message);
+          Toast.show({
+            type: "error",
+            text1: "Something went wrong!",
+            text2: error.message,
+          });
           setLoading(false);
         });
     } else {
@@ -47,23 +54,13 @@ const Login = () => {
       });
     }
   };
-  useFocusEffect(
-    useCallback(() => {
-      
-      
-      async function checkID() {
-        var checkUid = await AsyncStorage.getItem('uid')
-        if(checkUid != null) router.push('main')
-        else console.log("no uid found in CheckUID function");
 
-        
-      }
-      checkID()
-    }, [])
-  );
+
+
   return (
     <>
       <View style={styles.container}>
+      <StatusBar style="black" />
         <View style={styles.textView}>
           <Text style={styles.text}>Welcome</Text>
           <Text style={styles.text}>Back!</Text>
@@ -85,20 +82,33 @@ const Login = () => {
             style={styles.input}
           />
           <View style={styles.forgetContainer}>
-            <Text style={styles.forget}>Forgot password?</Text>
+            <Text style={styles.forget} onPress={()=>router.push('forgotpassword')}>Forgot password?</Text>
           </View>
           <TouchableOpacity onPress={handleLogin} style={styles.btn}>
             {loading ? (
-              <ActivityIndicator size={50} color={white} />
+              <ActivityIndicator size={40} color={"white"} />
             ) : (
               <Text style={styles.innerBtn}>Login</Text>
             )}
           </TouchableOpacity>
-          <Text style={{fontSize:18,marginBottom:10}}>or continue with</Text>
+          <Text style={{ fontSize: 18, marginBottom: 10 }}>
+            or continue with
+          </Text>
           <TouchableOpacity>
-            <Image source={{uri:'https://e7.pngegg.com/pngimages/114/607/png-clipart-g-suite-pearl-river-middle-school-google-software-suite-email-sign-up-button-text-logo.png'}} style={{height:hp('7%'),width:wp('13%')}} />
+            <Image
+              source={require("../assets/google.png")}
+              style={{ height: hp("7%"), width: wp("13%") }}
+            />
           </TouchableOpacity>
-          <Text style={{fontSize:15}}>Create an account <Text style={{color:'blue'}}>Signup</Text></Text>
+          <Text style={{ fontSize: 15 }}>
+            Create an account{" "}
+            <Text
+              style={{ color: "#2e7dab" }}
+              onPress={() => router.push("signup")}
+            >
+              Signup
+            </Text>
+          </Text>
         </View>
       </View>
     </>

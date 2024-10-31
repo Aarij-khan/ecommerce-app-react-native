@@ -1,49 +1,34 @@
-import { View, Text,Image ,} from 'react-native'
-import React from 'react'
-import Onboarding from 'react-native-onboarding-swiper';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import { router } from 'expo-router';
+import { View, ActivityIndicator, StyleSheet } from "react-native";
+import React, { useCallback, useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { router, useFocusEffect } from "expo-router";
 
-
-
-const Index = () => {
-  const sendToLogin = () => {
-    router.push("login");
-
+const Checkuser = () => {
+  async function checkID() {
+    var checkUid = await AsyncStorage.getItem("uid");
+    var  onboarding = await AsyncStorage.getItem('save');
+    console.log("🚀 ~ checkID ~ onboarding:", onboarding)
+    if (checkUid != null && onboarding === "true"){
+      router.push("main");
+    } 
+    else  router.push("screens")
   }
+  useFocusEffect(
+    useCallback(() => {
+      checkID();
+    }, [])
+  );
   return (
-    <Onboarding
-    onDone={sendToLogin}
-    onSkip={sendToLogin}
-    pages={[
-      {
-        backgroundColor: '#fff',
-        image:(
-            <Image source={require('../assets/fashion.png')} style={{height:hp('40%'),width:wp('80%')}} />   
-        ),
-        title: 'Choose Products',
-        subtitle: 'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.',
-      },
-      {
-        backgroundColor: '#fff',
-        image:(
-            <Image source={require('../assets/fashion2.png')} style={{height:hp('40%'),width:wp('80%')}}/>
-        ),
-        title: 'Make Payment',
-        subtitle: 'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.',
-      },
-      {
-        backgroundColor: '#fff',
-        image:(
-            <Image source={require('../assets/fashion3.png')} style={{height:hp('40%'),width:wp('80%')}} />
-        ),
-        title: 'Get Your Order',
-        subtitle: 'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.',
-      },
-      
-    ]}
-  />
-  )
-}
-
-export default Index
+    <View style={styles.container}>
+      <ActivityIndicator size={40} color={"black"} />
+    </View>
+  );
+};
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});
+export default Checkuser;
