@@ -6,7 +6,7 @@ import {
   ScrollView,
   FlatList,
 } from "react-native";
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Image } from "expo-image";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import {
@@ -194,14 +194,17 @@ const Home = () => {
               alignItems: "center",
               marginBottom: 5,
               borderRadius: 30,
+              flexDirection:'row',
+              gap:4
             }}
           >
+            <AntDesign name="plus" size={25} />
             <Text
               style={{
                 textAlign: "center",
                 fontSize: 18,
                 fontWeight: "bold",
-                marginBottom: 10,
+                marginBottom: 2,
               }}
             >
               Load More
