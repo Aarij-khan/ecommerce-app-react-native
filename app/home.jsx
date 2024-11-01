@@ -5,6 +5,7 @@ import {
   TextInput,
   ScrollView,
   FlatList,
+  ActivityIndicator,
 } from "react-native";
 import React, { useCallback, useState } from "react";
 import { Image } from "expo-image";
@@ -16,7 +17,7 @@ import {
 import Swiper from "react-native-swiper";
 import { useEffect } from "react";
 import Catagory from "../components/catagory";
-import { useFocusEffect } from "expo-router";
+import { Link, router, useFocusEffect } from "expo-router";
 import Toast from "react-native-toast-message";
 import ProductsItem from "./ProductsItem";
 import { TouchableOpacity } from "react-native";
@@ -105,7 +106,7 @@ const Home = () => {
           >
             <Image
               source={{
-                uri: "https://i.pinimg.com/736x/03/35/14/03351403ae27d274e94f1383358f003a.jpg",
+                uri:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3EzOf7Y8QQ8yZ47Vw7kvVIVFktBJ2n1UN0w&s'
               }}
               style={{ flex: 1, objectFit: "contain" }}
             />
@@ -124,14 +125,15 @@ const Home = () => {
           </Swiper>
         </View>
         <View style={Styles.filterbox}>
-          <Text style={Styles.text}>All Featured</Text>
+          <Text style={Styles.text} >All Featured</Text>
           <View style={Styles.filterMenu}>
             <Text style={Styles.text}>Filter </Text>
             <AntDesign name="filter" color="black" size={25} />
           </View>
         </View>
+
         {/* catagories start */}
-        <View style={{ marginBottom: 10 }}>
+        <View style={{ marginBottom: 10,paddingHorizontal:5 }}>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             <Catagory
               props="All"
@@ -165,6 +167,7 @@ const Home = () => {
           columnWrapperStyle={{ justifyContent: "space-between" }}
           data={mapCategory}
           renderItem={({ item }) => (
+          
             <ProductsItem
               id={item.id}
               img={item.image}
@@ -194,8 +197,8 @@ const Home = () => {
               alignItems: "center",
               marginBottom: 5,
               borderRadius: 30,
-              flexDirection:'row',
-              gap:4
+              flexDirection: "row",
+              gap: 4,
             }}
           >
             <AntDesign name="plus" size={25} />
@@ -243,6 +246,7 @@ const Styles = StyleSheet.create({
   },
   main: {
     flex: 1,
+    backgroundColor:'#EBEBEB'
   },
   innerBox: {
     paddingVertical: hp("8%"),

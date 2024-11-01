@@ -7,9 +7,9 @@ const Checkuser = () => {
   async function checkID() {
     var checkUid = await AsyncStorage.getItem("uid");
     var  onboarding = await AsyncStorage.getItem('save');
-    console.log("🚀 ~ checkID ~ onboarding:", onboarding)
-    if (checkUid != null && onboarding === "true"){
-      router.push("main");
+    var  startScreen = await AsyncStorage.getItem('start');
+    if (checkUid != null && onboarding === "true" && startScreen === "true"){
+      router.push("home");
     } 
     else  router.push("screens")
   }

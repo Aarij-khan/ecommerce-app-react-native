@@ -7,8 +7,13 @@ import React from 'react'
 import { Image } from 'expo-image'
 import { TouchableOpacity } from "react-native";
 import { router } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Main = () => {
+  const handleMove = async () => {
+    router.push('/home');
+    await AsyncStorage.setItem('start','true');
+  }
   return (
     <View>
        <Image source={require('../assets/getstarted.png')} style={{height:hp('105%'),width:wp('100%')}} />
@@ -18,7 +23,7 @@ const Main = () => {
         <Text style={Styles.text} >you go!</Text>
         <Text style={Styles.smalltext}>Find it here, buy it now!</Text>
        <TouchableOpacity style={Styles.btn} activeOpacity={0.7}>
-        <Text style={Styles.btntext} onPress={()=>router.push('/home')}>Get Started</Text>
+        <Text style={Styles.btntext} onPress={handleMove}>Get Started</Text>
        </TouchableOpacity>
 
        </View>

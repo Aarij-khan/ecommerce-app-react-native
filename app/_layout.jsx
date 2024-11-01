@@ -13,6 +13,7 @@ export default function RootLayout() {
         <Stack.Screen name="screens"  options={{headerShown:false}}/>
         <Stack.Screen name="home"  options={{headerShown:false}}/>
         <Stack.Screen name="ProductsItem"  options={{headerShown:false}}/>
+        <Stack.Screen name="productdetail"  options={{headerShown:false}}/>
       </Stack>
   );
 }
