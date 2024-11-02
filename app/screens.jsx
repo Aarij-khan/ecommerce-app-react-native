@@ -1,9 +1,9 @@
-import { View, Text,Image ,} from 'react-native'
 import React from 'react'
 import Onboarding from 'react-native-onboarding-swiper';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Image } from 'expo-image';
 
 
 

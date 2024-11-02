@@ -11,7 +11,9 @@ const Checkuser = () => {
     if (checkUid != null && onboarding === "true" && startScreen === "true"){
       router.push("home");
     } 
-    else  router.push("screens")
+    else  {
+      router.push("screens")
+    }
   }
   useFocusEffect(
     useCallback(() => {

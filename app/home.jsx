@@ -5,7 +5,6 @@ import {
   TextInput,
   ScrollView,
   FlatList,
-  ActivityIndicator,
 } from "react-native";
 import React, { useCallback, useState } from "react";
 import { Image } from "expo-image";
@@ -17,7 +16,7 @@ import {
 import Swiper from "react-native-swiper";
 import { useEffect } from "react";
 import Catagory from "../components/catagory";
-import { Link, router, useFocusEffect } from "expo-router";
+import { useFocusEffect } from "expo-router";
 import Toast from "react-native-toast-message";
 import ProductsItem from "./ProductsItem";
 import { TouchableOpacity } from "react-native";
