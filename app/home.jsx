@@ -107,19 +107,19 @@ const Home = () => {
               source={{
                 uri:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3EzOf7Y8QQ8yZ47Vw7kvVIVFktBJ2n1UN0w&s'
               }}
-              style={{ flex: 1, objectFit: "contain" }}
+              style={{ flex: 1, resizeMode:'contain'}}
             />
             <Image
               source={{
                 uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3EzOf7Y8QQ8yZ47Vw7kvVIVFktBJ2n1UN0w&s",
               }}
-              style={{ flex: 1, objectFit: "cover" }}
+              style={{ flex:1, resizeMode:'contain' }}
             />
             <Image
               source={{
                 uri: "https://png.pngtree.com/thumb_back/fh260/background/20201015/pngtree-black-friday-sale-banner-pink-design-template-image_417566.jpg",
               }}
-              style={{ flex: 1, objectFit: "contain" }}
+              style={{ flex: 1,resizeMode:'contain' }}
             />
           </Swiper>
         </View>
