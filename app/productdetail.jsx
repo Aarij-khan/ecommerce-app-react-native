@@ -7,6 +7,7 @@ import {
 } from "react-native-responsive-screen";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
+import { TouchableOpacity } from "react-native";
 
 const Productdetail = () => {
   const params = useLocalSearchParams();
@@ -53,7 +54,6 @@ const Productdetail = () => {
                   style={{
                     fontSize: 30,
                     fontWeight: "bold",
-                    marginLeft: 10,
                     marginTop: 10,
                   }}
                 >
@@ -61,14 +61,19 @@ const Productdetail = () => {
                     ? e.title.slice(0, 20) + "..."
                     : e.title}
                 </Text>
-                <Text style={{ fontSize: 20, marginLeft: 10, marginTop: 10 }}>
-                  {e.price}
+                <Text style={{ fontSize: 23 }}>
+                  $ {e.price}
                 </Text>
 
-                <Text style={{ fontSize: 20, marginLeft: 10, marginTop: 10 }}>
+                <Text style={{ fontSize: 20}}>
                   {e.description.length > 20 ? e.description.slice(0.20)+'...': e.description}
                 </Text>
+                <TouchableOpacity style={Style.boxes}>
+                  <AntDesign name="shoppingcart" size={30} color={'white'} />
+                  <Text style={Style.boxesText}>add to cart</Text>
+                </TouchableOpacity>
               </View>
+              
             </View>
           );
         })}
@@ -112,7 +117,29 @@ const Style = StyleSheet.create({
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     paddingHorizontal: 10,
+    display:'flex',
+    flexDirection:'column',
+    alignItems:'center',
+    gap:10
   },
+  boxes:{
+    display:'flex',
+    justifyContent:'center',
+    alignItems:'center',
+    width:wp('90%'),
+    height:hp('6%'),
+    backgroundColor:'#F83758',
+    borderRadius:10,
+    marginTop:8,
+    flexDirection:'row',
+    gap:10,
+    alignItems:'center'
+  },
+  boxesText:{
+    fontSize:20,
+    fontWeight:'bold',
+    color:'white'
+  }
 });
 
 export default Productdetail;

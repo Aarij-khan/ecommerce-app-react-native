@@ -14,9 +14,8 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import Swiper from "react-native-swiper";
-import { useEffect } from "react";
 import Catagory from "../components/catagory";
-import { useFocusEffect } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
 import Toast from "react-native-toast-message";
 import ProductsItem from "./ProductsItem";
 import { TouchableOpacity } from "react-native";
@@ -54,9 +53,12 @@ const Home = () => {
       });
     }
   };
-  useEffect(() => {
-    ApiCatagory();
-  }, [selectCatagory, limit]);
+  useFocusEffect(
+    useCallback(() => {
+      ApiCatagory();
+    }, [selectCatagory, limit])
+  );
+
   const ApiCatagory = async () => {
     var uri =
       selectCatagory == "All"
@@ -92,8 +94,11 @@ const Home = () => {
         </View>
         {/* input start here */}
         <Toast />
-        <View>
-          <TextInput placeholder="Search any product" style={Styles.input} />
+        <View style={Styles.searchbox}>
+          <View style={Styles.Innerbox}>
+            <AntDesign name="search1" size={32} color="black" />
+            <TextInput placeholder="Search any product" style={Styles.input} />
+          </View>
         </View>
         {/* input end here */}
         <View style={{ height: hp("30%") }}>
@@ -105,34 +110,37 @@ const Home = () => {
           >
             <Image
               source={{
-                uri:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3EzOf7Y8QQ8yZ47Vw7kvVIVFktBJ2n1UN0w&s'
+                uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3EzOf7Y8QQ8yZ47Vw7kvVIVFktBJ2n1UN0w&s",
               }}
-              style={{ flex: 1, resizeMode:'contain'}}
+              contentFit="cover"
+              style={{ flex: 1 }}
             />
             <Image
               source={{
                 uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3EzOf7Y8QQ8yZ47Vw7kvVIVFktBJ2n1UN0w&s",
               }}
-              style={{ flex:1, resizeMode:'contain' }}
+              contentFit="cover"
+              style={{ flex: 1 }}
             />
             <Image
               source={{
                 uri: "https://png.pngtree.com/thumb_back/fh260/background/20201015/pngtree-black-friday-sale-banner-pink-design-template-image_417566.jpg",
               }}
-              style={{ flex: 1,resizeMode:'contain' }}
+              contentFit="cover"
+              style={{ flex: 1 }}
             />
           </Swiper>
         </View>
         <View style={Styles.filterbox}>
-          <Text style={Styles.text} >All Featured</Text>
+          <Text style={Styles.text}>All Featured</Text>
           <View style={Styles.filterMenu}>
-            <Text style={Styles.text}>Filter </Text>
+            <Text style={Styles.text} >Filter </Text>
             <AntDesign name="filter" color="black" size={25} />
           </View>
         </View>
 
         {/* catagories start */}
-        <View style={{ marginBottom: 10,paddingHorizontal:5 }}>
+        <View style={{ marginBottom: 10, paddingHorizontal: 5 }}>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             <Catagory
               props="All"
@@ -166,7 +174,6 @@ const Home = () => {
           columnWrapperStyle={{ justifyContent: "space-between" }}
           data={mapCategory}
           renderItem={({ item }) => (
-          
             <ProductsItem
               id={item.id}
               img={item.image}
@@ -245,7 +252,7 @@ const Styles = StyleSheet.create({
   },
   main: {
     flex: 1,
-    backgroundColor:'#EBEBEB'
+    backgroundColor: "#EBEBEB",
   },
   innerBox: {
     paddingVertical: hp("8%"),
@@ -258,11 +265,27 @@ const Styles = StyleSheet.create({
   },
   input: {
     height: hp("6%"),
+    width: wp("72%"),
+    fontSize: 20,
+    marginLeft: 4,
+  },
+  searchbox: {
+    width: wp("100%"),
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  Innerbox: {
+    backgroundColor: "lightgrey",
+    height: hp("7%"),
     width: wp("90%"),
-    borderRadius: 2,
+    borderColor: "black",
     borderWidth: 1,
-    marginHorizontal: wp("5%"),
-    paddingHorizontal: wp("5%"),
+    justifyContent: "flex-start",
+    alignItems: "center",
+    flexDirection: "row",
+    borderRadius: 30,
+    paddingLeft:10,
+    gap:5
   },
 });
 export default Home;

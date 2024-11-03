@@ -13,13 +13,14 @@ import {
 import { router } from "expo-router";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { StatusBar } from "expo-status-bar";
+import { AntDesign, Feather } from "@expo/vector-icons";
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSignup = () => {
-    if (email && password != "") {
+    if (email != "" && password != "") {
       setLoading(true);
       createUserWithEmailAndPassword(auth, email, password)
         .then(async (userCredential) => {
@@ -47,40 +48,58 @@ const Signup = () => {
   return (
     <View style={styles.container}>
       <StatusBar style="black" />
-        <View style={styles.textView}>
-          <Text style={styles.text}>Create an</Text>
-          <Text style={styles.text}>account</Text>
-          <Toast />
-        </View>
+      <View style={styles.textView}>
+        <Text style={styles.text}>Create an</Text>
+        <Text style={styles.text}>account</Text>
+        <Toast />
+      </View>
 
-        <View style={styles.main}>
+      <View style={styles.main}>
+        <View style={styles.Innerbox}>
+          <AntDesign name="mail" size={32} color="black" />
           <TextInput
             placeholder="Enter email"
+            style={styles.input1}
             value={email}
             onChangeText={(text) => setEmail(text)}
-            style={styles.input}
           />
+        </View>
+        <View style={styles.Innerbox}>
+          <Feather name="unlock" size={30} color="black" />
           <TextInput
             placeholder="Enter password"
-            secureTextEntry={true}
+            style={styles.input1}
             value={password}
             onChangeText={(text) => setPassword(text)}
-            style={styles.input}
+            secureTextEntry={true}
           />
-          <TouchableOpacity onPress={handleSignup} style={styles.btn}>
-            {loading ? (
-              <ActivityIndicator size={40} color={'white'} />
-            ) : (
-              <Text style={styles.innerBtn}>Create account</Text>
-            )}
-          </TouchableOpacity>
-          <Text style={{fontSize:18,marginBottom:10}}>or continue with</Text>
-          <TouchableOpacity>
-            <Image source={require('../assets/google.png')} style={{height:hp('7%'),width:wp('13%')}} />
-          </TouchableOpacity>
-          <Text style={{fontSize:15}}>Already have an account<Text style={{color:'#2e7dab'}} onPress={()=>router.push('login')}> Login</Text></Text>
         </View>
+
+        <TouchableOpacity onPress={handleSignup} style={styles.btn}>
+          {loading ? (
+            <ActivityIndicator size={40} color={"white"} />
+          ) : (
+            <Text style={styles.innerBtn}>Create account</Text>
+          )}
+        </TouchableOpacity>
+        <Text style={{ fontSize: 18, marginBottom: 10 }}>or continue with</Text>
+        <TouchableOpacity>
+          <Image
+            source={require("../assets/google.png")}
+            style={{ height: hp("7%"), width: wp("13%") }}
+          />
+        </TouchableOpacity>
+        <Text style={{ fontSize: 15 }}>
+          Already have an account
+          <Text
+            style={{ color: "#2e7dab" }}
+            onPress={() => router.push("login")}
+          >
+            Login
+          </Text>
+        </Text>
       </View>
+    </View>
   );
 };
 
@@ -101,7 +120,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-start",
     alignItems: "center",
-    gap: 15,
+    gap: 30,
+  },
+  input1: {
+    height: hp("6%"),
+    width: wp("72%"),
+    fontSize: 20,
+    marginLeft: 4,
   },
   input: {
     height: hp("7%"),
@@ -144,6 +169,19 @@ const styles = StyleSheet.create({
     color: "black",
     marginTop: 5,
     marginLeft: 20,
+  },
+  Innerbox: {
+    backgroundColor: "lightgrey",
+    height: hp("7%"),
+    width: wp("90%"),
+    borderColor: "black",
+    borderWidth: 1,
+    justifyContent: "flex-start",
+    alignItems: "center",
+    flexDirection: "row",
+    borderRadius: 30,
+    paddingLeft: 10,
+    gap:5
   },
 });
 export default Signup;
