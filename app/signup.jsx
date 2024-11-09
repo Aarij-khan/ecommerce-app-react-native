@@ -115,11 +115,11 @@ const Signup = () => {
           <View style={styles.btnBox} >
             <TouchableOpacity style={styles.buttons}  activeOpacity={0.7}>
               <FontAwesome6 size={22} name="camera" color="white" />
-              <Text style={styles.btnText}>see more</Text>
+              <Text style={styles.btnText}>Camera</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.buttons}  activeOpacity={0.7}>
               <AntDesign size={22} name="folderopen" color="white" />
-              <Text style={styles.btnText}>see more</Text>
+              <Text style={styles.btnText}>Gallery</Text>
             </TouchableOpacity>
           </View>
           </View> 
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
   Modalcontainer:{
     height:hp("100%"),
     width:wp("100%"),
-    backgroundColor:'red',
+    backgroundColor:'lightgrey',
     justifyContent:'center',
   
   },
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     width: '40%',
     height: 50,
     borderRadius: 10,
-    backgroundColor: '#808080',
+    backgroundColor: '#F83758',
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
