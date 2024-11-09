@@ -1,11 +1,11 @@
-import { View, Text, StyleSheet, TextInput } from "react-native";
+import { View, Text, StyleSheet, TextInput, Modal } from "react-native";
 import React, { useState } from "react";
 import { TouchableOpacity } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ActivityIndicator } from "react-native";
 import { auth } from "./firebase.config/firebase";
 import Toast from "react-native-toast-message";
-import { Image } from "expo-image";
+import { Image, ImageBackground } from "expo-image";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -13,11 +13,12 @@ import {
 import { router } from "expo-router";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { StatusBar } from "expo-status-bar";
-import { AntDesign, Feather } from "@expo/vector-icons";
+import { AntDesign, Feather, FontAwesome6 } from "@expo/vector-icons";
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isModal, setIsModal] = useState(false);
 
   const handleSignup = () => {
     if (email != "" && password != "") {
@@ -45,6 +46,9 @@ const Signup = () => {
       });
     }
   };
+  // const uploadCamera = () => {
+    
+  // }
   return (
     <View style={styles.container}>
       <StatusBar style="black" />
@@ -55,6 +59,14 @@ const Signup = () => {
       </View>
 
       <View style={styles.main}>
+        <View>
+          <Image style={styles.img}  source={{uri: 'https://i.sstatic.net/l60Hf.png'}}/>
+        <View >
+          <TouchableOpacity onPress={()=> setIsModal(true)}>
+          <Image style={styles.imgcamera}  source={{uri:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRIFfsz_8k7frSoR7trMed_Fdzh_PRH6u7hQ&s'}}/>
+          </TouchableOpacity>
+        </View>
+        </View>
         <View style={styles.Innerbox}>
           <AntDesign name="mail" size={32} color="black" />
           <TextInput
@@ -98,6 +110,20 @@ const Signup = () => {
             Login
           </Text>
         </Text>
+        <Modal visible={isModal}>
+          <View style={styles.Modalcontainer}>
+          <View style={styles.btnBox} >
+            <TouchableOpacity style={styles.buttons}  activeOpacity={0.7}>
+              <FontAwesome6 size={22} name="camera" color="white" />
+              <Text style={styles.btnText}>see more</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.buttons}  activeOpacity={0.7}>
+              <AntDesign size={22} name="folderopen" color="white" />
+              <Text style={styles.btnText}>see more</Text>
+            </TouchableOpacity>
+          </View>
+          </View> 
+        </Modal>
       </View>
     </View>
   );
@@ -107,10 +133,48 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  Modalcontainer:{
+    height:hp("100%"),
+    width:wp("100%"),
+    backgroundColor:'red',
+    justifyContent:'center',
+  
+  },
+  buttons: {
+    width: '40%',
+    height: 50,
+    borderRadius: 10,
+    backgroundColor: '#808080',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    gap: 15,
+
+
+  },
+  btnBox: {
+    width: '100%',
+    alignItems: 'center',
+    marginTop: 10,
+   justifyContent:'center',
+    alignItems:'center',
+    flexDirection:'row',
+    gap: 20,
+  },
+  btnText: {
+    fontFamily: 'serif',
+    color: 'white'
+
+  },
   forgetContainer: {
     width: wp("80%"),
     justifyContent: "flex-end",
     alignItems: "flex-end",
+  },
+  img:{
+    height:hp("15%"),
+    width:wp("30%"),
+    borderRadius:100
   },
   innerBtn: {
     fontSize: 20,
@@ -150,6 +214,14 @@ const styles = StyleSheet.create({
   textView: {
     paddingHorizontal: 20,
     paddingVertical: 30,
+  },
+  imgcamera:{
+    height:hp("5%"),
+    width:wp("10%"),
+    position:'absolute',
+    bottom:0,
+    right:0,
+    borderRadius:100
   },
   btn: {
     height: hp("7%"),

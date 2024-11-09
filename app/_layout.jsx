@@ -14,6 +14,7 @@ export default function RootLayout() {
         <Stack.Screen name="home"  options={{headerShown:false}}/>
         <Stack.Screen name="ProductsItem"  options={{headerShown:false}}/>
         <Stack.Screen name="productdetail"  options={{headerShown:false}}/>
+        <Stack.Screen name="profile"  options={{animation:'slide_from_bottom',headerTitleAlign:'center',headerTitle:'Profile'}}/>
       </Stack>
   );
 }

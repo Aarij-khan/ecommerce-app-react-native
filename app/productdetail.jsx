@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, SafeAreaView } from "react-native";
+import { View, Text, StyleSheet, SafeAreaView, ScrollView } from "react-native";
 import React, { useEffect, useState } from "react";
 import { router, useLocalSearchParams } from "expo-router";
 import {
@@ -47,6 +47,7 @@ const Productdetail = () => {
                   source={{
                     uri: e.image,
                   }}
+                  contentFit="cover"
                 />
               </View>
               <View style={Style.box}>
@@ -64,10 +65,14 @@ const Productdetail = () => {
                 <Text style={{ fontSize: 23 }}>
                   $ {e.price}
                 </Text>
-
+              <View style={Style.description}>
+                <ScrollView>
                 <Text style={{ fontSize: 20}}>
-                  {e.description.length > 20 ? e.description.slice(0.20)+'...': e.description}
+                  {e.description.length > 200 ? e.description.slice(0,200)+'...': e.description}
                 </Text>
+                </ScrollView>
+              </View>
+
                 <TouchableOpacity style={Style.boxes}>
                   <AntDesign name="shoppingcart" size={30} color={'white'} />
                   <Text style={Style.boxesText}>add to cart</Text>
@@ -88,6 +93,11 @@ const Style = StyleSheet.create({
     backgroundColor: "#EBEBEB",
     
   },
+  description:{
+    width:wp('90%'),
+    height:hp('30%'),
+    marginTop:10,
+  },
   iconbox: {
     width: wp("100%"),
     height: 50,
@@ -101,7 +111,6 @@ const Style = StyleSheet.create({
     marginTop: "5%",
     width: wp("94%"),
     height: hp("30%"),
-    resizeMode: "stretch",
     borderRadius: 20,
   },
   Imagebox: {

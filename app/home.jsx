@@ -83,14 +83,21 @@ const Home = () => {
         <View style={Styles.innerBox}>
           <Image
             source={require("../assets/fashion1.png")}
-            style={{ height: hp("7%"), width: wp("39%") }}
+            style={{ height: hp("7%"), width: wp("40%") }}
           />
+          <View style={Styles.iconsbox}>
+          <TouchableOpacity onPress={() => router.push("/profile")}>
           <Image
             source={{
               uri: "https://img.freepik.com/premium-photo/elevate-your-brand-with-friendly-avatar-that-reflects-professionalism-ideal-sales-managers_1283595-18531.jpg?semt=ais_hybrid",
             }}
             style={{ height: hp("8%"), width: wp("17%"), borderRadius: 50 }}
           />
+          </TouchableOpacity>
+            <AntDesign name="shoppingcart" size={50} color="black" />
+
+          </View>
+
         </View>
         {/* input start here */}
         <Toast />
@@ -237,6 +244,15 @@ const Styles = StyleSheet.create({
     gap: 2,
     borderRadius: 5,
   },
+  iconsbox:{
+    height: hp("22%"),
+    width: wp("20%"),
+    flexDirection:"column",
+    alignItems:"center",
+    justifyContent:"flex-end",
+    gap:10
+
+  },
   text: {
     fontSize: 20,
     fontWeight: "800",
@@ -255,8 +271,9 @@ const Styles = StyleSheet.create({
     backgroundColor: "#EBEBEB",
   },
   innerBox: {
-    paddingVertical: hp("8%"),
     paddingHorizontal: wp("5%"),
+    marginBottom:30,
+    marginVertical:30,
     height: hp("10%"),
     width: wp("100%"),
     flexDirection: "row",
@@ -273,6 +290,7 @@ const Styles = StyleSheet.create({
     width: wp("100%"),
     justifyContent: "center",
     alignItems: "center",
+    marginTop:35
   },
   Innerbox: {
     backgroundColor: "lightgrey",
