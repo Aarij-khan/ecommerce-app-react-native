@@ -1,11 +1,11 @@
-import { View, Text, StyleSheet, TextInput, Modal } from "react-native";
+import { doc } from 'firebase/firestore';
+import { View, Text, StyleSheet, TextInput,TouchableOpacity,ActivityIndicator} from "react-native";
 import React, { useState } from "react";
-import { TouchableOpacity } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { ActivityIndicator } from "react-native";
-import { auth } from "./firebase.config/firebase";
+import { auth, db } from "./firebase.config/firebase";
 import Toast from "react-native-toast-message";
-import { Image, ImageBackground } from "expo-image";
+import { Image } from "expo-image";
+// import * as ImagePicker from "expo-image-picker";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -14,11 +14,14 @@ import { router } from "expo-router";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { StatusBar } from "expo-status-bar";
 import { AntDesign, Feather, FontAwesome6 } from "@expo/vector-icons";
+// import { CameraView, CameraType, useCameraPermissions } from 'expo-camera';
+import { setDoc } from "firebase/firestore";
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [isModal, setIsModal] = useState(false);
+  // const [isModal, setIsModal] = useState(false);
+  // const [image, setImage] = useState('');
 
   const handleSignup = () => {
     if (email != "" && password != "") {
@@ -26,6 +29,15 @@ const Signup = () => {
       createUserWithEmailAndPassword(auth, email, password)
         .then(async (userCredential) => {
           const uid = userCredential.user.uid;
+          Toast.show({
+            type: "success",
+            text1: "Login successfully",
+            text2: "happy shoping",
+          });
+          setDoc(doc(db, "users", uid), {
+            email,
+            uid,
+          });
           console.log("signup -> uid", uid);
           var saveUId = await AsyncStorage.setItem("uid", uid);
           console.log("🚀saveUId:from signup ", saveUId);
@@ -44,11 +56,30 @@ const Signup = () => {
         text1: "Something went wrong!",
         text2: "Please fill all the fields",
       });
+
     }
   };
-  // const uploadCamera = () => {
+  // async function handleCamera() {
+  //    setIsModal(false);
+  //    let res = await ImagePicker.requestCameraPermissionsAsync();
+  //    if (res.granted) {
+ 
+  //      let result = await ImagePicker.launchCameraAsync();
+  //      if (!result.canceled) {
+  //        console.log(result.assets[0].uri);
+  //        setImage(result.assets[0].uri);
+  //        await handleUpload(result.assets[0].uri);
+  //      }
+ 
+  //    } else {
+  //      showToast("error", "Error", "Permission to access the camera is required!");
+  //    }
+  //  }
+  //  async function handleUpload(params) {
+  //   console.log("🚀 ~ handleUpload ~ params:", params)
     
-  // }
+  //  }
+   
   return (
     <View style={styles.container}>
       <StatusBar style="black" />
@@ -57,16 +88,7 @@ const Signup = () => {
         <Text style={styles.text}>account</Text>
         <Toast />
       </View>
-
       <View style={styles.main}>
-        <View>
-          <Image style={styles.img}  source={{uri: 'https://i.sstatic.net/l60Hf.png'}}/>
-        <View >
-          <TouchableOpacity onPress={()=> setIsModal(true)}>
-          <Image style={styles.imgcamera}  source={{uri:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRIFfsz_8k7frSoR7trMed_Fdzh_PRH6u7hQ&s'}}/>
-          </TouchableOpacity>
-        </View>
-        </View>
         <View style={styles.Innerbox}>
           <AntDesign name="mail" size={32} color="black" />
           <TextInput
@@ -110,20 +132,7 @@ const Signup = () => {
             Login
           </Text>
         </Text>
-        <Modal visible={isModal}>
-          <View style={styles.Modalcontainer}>
-          <View style={styles.btnBox} >
-            <TouchableOpacity style={styles.buttons}  activeOpacity={0.7}>
-              <FontAwesome6 size={22} name="camera" color="white" />
-              <Text style={styles.btnText}>Camera</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.buttons}  activeOpacity={0.7}>
-              <AntDesign size={22} name="folderopen" color="white" />
-              <Text style={styles.btnText}>Gallery</Text>
-            </TouchableOpacity>
-          </View>
-          </View> 
-        </Modal>
+     
       </View>
     </View>
   );

@@ -5,8 +5,9 @@ import {
   TextInput,
   ScrollView,
   FlatList,
+  TouchableOpacity
 } from "react-native";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Image } from "expo-image";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import {
@@ -18,19 +19,18 @@ import Catagory from "../components/catagory";
 import { router, useFocusEffect } from "expo-router";
 import Toast from "react-native-toast-message";
 import ProductsItem from "./ProductsItem";
-import { TouchableOpacity } from "react-native";
 const Home = () => {
+  const btnref = useRef(null);
   const [catagory, setCatagory] = useState([]);
   const [selectCatagory, setSelectCatagory] = useState(["All"]);
   const [limit, setLimit] = useState(5);
   const [mapCategory, setMapCategory] = useState([]);
 
-  if (limit === 20) {
-    Toast.show({
-      type: "error",
-      text1: "Something went wrong!",
-    });
-  }
+  useEffect(() => {
+    if (limit == 20) {
+      btnref.current.setNativeProps({ style: { display: "none" } });
+    }
+  }, [limit]);
 
   useFocusEffect(
     useCallback(() => {
@@ -53,6 +53,7 @@ const Home = () => {
       });
     }
   };
+
   useFocusEffect(
     useCallback(() => {
       ApiCatagory();
@@ -86,27 +87,29 @@ const Home = () => {
             style={{ height: hp("7%"), width: wp("40%") }}
           />
           <View style={Styles.iconsbox}>
-          <TouchableOpacity onPress={() => router.push("/profile")}>
-          <Image
-            source={{
-              uri: "https://img.freepik.com/premium-photo/elevate-your-brand-with-friendly-avatar-that-reflects-professionalism-ideal-sales-managers_1283595-18531.jpg?semt=ais_hybrid",
-            }}
-            style={{ height: hp("8%"), width: wp("17%"), borderRadius: 50 }}
-          />
-          </TouchableOpacity>
-            <AntDesign name="shoppingcart" size={50} color="black" />
-
+            <TouchableOpacity onPress={() => router.push("/profile")}>
+              <Image
+                source={{
+                  uri: "https://img.freepik.com/premium-photo/elevate-your-brand-with-friendly-avatar-that-reflects-professionalism-ideal-sales-managers_1283595-18531.jpg?semt=ais_hybrid",
+                }}
+                style={{ height: hp("8%"), width: wp("17%"), borderRadius: 50 }}
+              />
+            </TouchableOpacity>
+            <AntDesign name="shoppingcart" size={40} color="black" />
           </View>
-
         </View>
         {/* input start here */}
         <Toast />
-        <View style={Styles.searchbox}>
+        <TouchableOpacity activeOpacity={0.7} style={Styles.searchbox} onPress={() => router.push('/search')}>
           <View style={Styles.Innerbox}>
             <AntDesign name="search1" size={32} color="black" />
-            <TextInput placeholder="Search any product" style={Styles.input} />
+            <TextInput
+              placeholder="Search any product"
+              style={Styles.input}
+              editable={false}
+            />
           </View>
-        </View>
+        </TouchableOpacity>
         {/* input end here */}
         <View style={{ height: hp("30%") }}>
           <Swiper
@@ -141,7 +144,7 @@ const Home = () => {
         <View style={Styles.filterbox}>
           <Text style={Styles.text}>All Featured</Text>
           <View style={Styles.filterMenu}>
-            <Text style={Styles.text} >Filter </Text>
+            <Text style={Styles.text}>Filter </Text>
             <AntDesign name="filter" color="black" size={25} />
           </View>
         </View>
@@ -194,6 +197,7 @@ const Home = () => {
       {/* catagories end */}
       {selectCatagory == "All" && (
         <View
+          ref={btnref}
           style={{
             width: wp("100%"),
             justifyContent: "center",
@@ -244,14 +248,13 @@ const Styles = StyleSheet.create({
     gap: 2,
     borderRadius: 5,
   },
-  iconsbox:{
+  iconsbox: {
     height: hp("22%"),
     width: wp("20%"),
-    flexDirection:"column",
-    alignItems:"center",
-    justifyContent:"flex-end",
-    gap:10
-
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    gap: 10,
   },
   text: {
     fontSize: 20,
@@ -272,8 +275,8 @@ const Styles = StyleSheet.create({
   },
   innerBox: {
     paddingHorizontal: wp("5%"),
-    marginBottom:30,
-    marginVertical:30,
+    marginBottom: 30,
+    marginVertical: 30,
     height: hp("10%"),
     width: wp("100%"),
     flexDirection: "row",
@@ -290,7 +293,7 @@ const Styles = StyleSheet.create({
     width: wp("100%"),
     justifyContent: "center",
     alignItems: "center",
-    marginTop:35
+    marginTop: 35,
   },
   Innerbox: {
     backgroundColor: "lightgrey",
@@ -302,8 +305,8 @@ const Styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     borderRadius: 30,
-    paddingLeft:10,
-    gap:5
+    paddingLeft: 10,
+    gap: 5,
   },
 });
 export default Home;

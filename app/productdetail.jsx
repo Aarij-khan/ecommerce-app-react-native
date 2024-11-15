@@ -47,7 +47,7 @@ const Productdetail = () => {
                   source={{
                     uri: e.image,
                   }}
-                  contentFit="cover"
+                  contentFit="fill"
                 />
               </View>
               <View style={Style.box}>
