@@ -7,9 +7,10 @@ import {
   FlatList,
   TouchableOpacity
 } from "react-native";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { Image } from "expo-image";
 import AntDesign from "react-native-vector-icons/AntDesign";
+import { Badge } from "react-native-paper";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -19,7 +20,11 @@ import Catagory from "../components/catagory";
 import { router, useFocusEffect } from "expo-router";
 import Toast from "react-native-toast-message";
 import ProductsItem from "./ProductsItem";
+import { CartItem } from "./context/contextapi";
+import Animated, { FadeInDown } from "react-native-reanimated";
 const Home = () => {
+  const { carts } =
+  useContext(CartItem);
   const btnref = useRef(null);
   const [catagory, setCatagory] = useState([]);
   const [selectCatagory, setSelectCatagory] = useState(["All"]);
@@ -95,7 +100,33 @@ const Home = () => {
                 style={{ height: hp("8%"), width: wp("17%"), borderRadius: 50 }}
               />
             </TouchableOpacity>
-            <AntDesign name="shoppingcart" size={40} color="black" />
+            <TouchableOpacity
+  onPress={() => router.push('addtocart')}
+  style={{
+    position: 'relative', 
+    width: 50, // Adjust as per design
+    height: 50, // Adjust as per design
+    justifyContent: 'center', 
+    alignItems: 'center',
+  }}
+>
+  <Badge
+    style={{
+      position: 'fived',
+      top: 7, 
+      backgroundColor: 'red',
+    }}
+  >
+    {carts.length}
+  </Badge>
+  <AntDesign
+    name="shoppingcart"
+    size={32}
+    color="black"
+  />
+</TouchableOpacity>
+
+           
           </View>
         </View>
         {/* input start here */}
@@ -183,7 +214,9 @@ const Home = () => {
           }}
           columnWrapperStyle={{ justifyContent: "space-between" }}
           data={mapCategory}
-          renderItem={({ item }) => (
+          renderItem={({ item ,idx}) => (
+            <Animated.View
+            entering={FadeInDown.delay(idx*350).springify()}>
             <ProductsItem
               id={item.id}
               img={item.image}
@@ -191,6 +224,7 @@ const Home = () => {
               price={item.price}
               rating={item.rating.rate}
             />
+            </Animated.View>
           )}
         />
       </View>
@@ -254,7 +288,7 @@ const Styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "flex-end",
-    gap: 10,
+    gap: 8,
   },
   text: {
     fontSize: 20,
@@ -274,7 +308,7 @@ const Styles = StyleSheet.create({
     backgroundColor: "#EBEBEB",
   },
   innerBox: {
-    paddingHorizontal: wp("5%"),
+    paddingHorizontal: wp("3%"),
     marginBottom: 30,
     marginVertical: 30,
     height: hp("10%"),

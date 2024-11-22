@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, SafeAreaView, ScrollView } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState ,useContext} from "react";
 import { router, useLocalSearchParams } from "expo-router";
 import {
   widthPercentageToDP as wp,
@@ -8,8 +8,11 @@ import {
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { TouchableOpacity } from "react-native";
+import { CartItem } from "./context/contextapi";
 
 const Productdetail = () => {
+  const { carts,handleCartItems,removeCartItems,IsItemAdded,decreaseItem } =useContext(CartItem);
+
   const params = useLocalSearchParams();
   const productId = params.id;
   const [product, setproduct] = useState([]);
@@ -26,6 +29,7 @@ const Productdetail = () => {
 
   return (
     <SafeAreaView>
+      <ScrollView showsVerticalScrollIndicator={false} vertical style={{flex:1}}>
       <View style={Style.main}>
         {product.map((e, idx) => {
           return (
@@ -75,7 +79,7 @@ const Productdetail = () => {
 
                 <TouchableOpacity style={Style.boxes}>
                   <AntDesign name="shoppingcart" size={30} color={'white'} />
-                  <Text style={Style.boxesText}>add to cart</Text>
+                  <Text style={Style.boxesText} onPress={()=> handleCartItems(e)} >{IsItemAdded(e.id)?`${IsItemAdded(e.id)} Added` : "add to cart"}</Text>
                 </TouchableOpacity>
               </View>
               
@@ -83,6 +87,7 @@ const Productdetail = () => {
           );
         })}
       </View>
+    </ScrollView>
     </SafeAreaView>
   );
 };

@@ -13,6 +13,7 @@ const ProductsItem = ({ rating, price, title, img, id }) => {
     <View style={{ marginTop: 15 }}>
       <Link href={`productdetail?id=${id}`}>
         <View
+         
           style={{
             height: hp("38%"),
             width: wp("45%"),
