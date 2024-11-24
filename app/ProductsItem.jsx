@@ -27,6 +27,7 @@ const ProductsItem = ({ rating, price, title, img, id }) => {
         >
           <Image
             source={{ uri: img }}
+            cachePolicy="memory-disk"
             style={{
               height: hp("25%"),
               width: wp("45%"),
@@ -84,7 +85,7 @@ const ProductsItem = ({ rating, price, title, img, id }) => {
                   marginTop: 2,
                 }}
               >
-                {rating}{" "}
+                {rating}
               </Text>
               <Ionicons name="star-half-outline" size={20} color={"#e1ad01"} />
               <Ionicons name="star-half-outline" size={20} color={"#e1ad01"} />

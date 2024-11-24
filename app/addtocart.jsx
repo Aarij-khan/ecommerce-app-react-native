@@ -9,7 +9,7 @@ import {
 import React, { useContext, useEffect, useState } from "react";
 import { Image } from "expo-image";
 import { CartItem } from "./context/contextapi";
-import { AntDesign, Ionicons } from "@expo/vector-icons";
+import { AntDesign, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import Animated, { FadeInDown } from "react-native-reanimated";
 import { useToast } from "react-native-toast-notifications";
@@ -85,7 +85,7 @@ const Addtocart = () => {
                       <AntDesign
                         name="plus"
                         size={26}
-                        color="black"
+                        color="white"
                         onPress={() => handleCartItems(Cart)}
                         style={styles.iconButton}
                       />
@@ -95,7 +95,7 @@ const Addtocart = () => {
                       <AntDesign
                         name="minus"
                         size={26}
-                        color="black"
+                        color="white"
                         onPress={() => decreaseItem(Cart.id)}
                         style={styles.iconButton}
                       />
@@ -103,10 +103,10 @@ const Addtocart = () => {
                   </View>
                 </View>
               </View>
-              <AntDesign
-                name="delete"
-                size={30}
-                color="black"
+              <MaterialCommunityIcons
+                name="delete-circle"
+                size={40}
+                color="red"
                 onPress={() => removeCartItems(Cart.id)}
                 style={styles.deleteIcon}
               />
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
   header: {
     color: "#F83758",
     fontSize: 32,
-    marginTop: 10,
+    marginTop: '10%',
     textAlign: "center",
     paddingBottom: 8,
     fontWeight: "bold",
@@ -188,6 +188,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     backgroundColor: "#F83758",
     marginLeft: 10,
+    padding:2
   },
   quantityText: {
     borderWidth: 1,

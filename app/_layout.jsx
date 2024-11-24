@@ -14,7 +14,14 @@ export default function RootLayout() {
         <Stack.Screen name="home" options={{ headerShown: false }} />
         <Stack.Screen name="ProductsItem" options={{ headerShown: false }} />
         <Stack.Screen name="productdetail" options={{ headerShown: false }} />
-        <Stack.Screen name="search" options={{ headerShown: false }} />
+        <Stack.Screen
+          name="search"
+          options={{
+            headerTitleAlign: "center",
+            headerTitle: "Products",
+            headerTintColor:"red"
+          }}
+        />
         <Stack.Screen name="addtocart" options={{ headerShown: false }} />
         <Stack.Screen
           name="profile"
@@ -25,6 +32,6 @@ export default function RootLayout() {
           }}
         />
       </Stack>
-      </CartProvider>
+    </CartProvider>
   );
 }

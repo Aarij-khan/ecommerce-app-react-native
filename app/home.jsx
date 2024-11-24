@@ -5,9 +5,16 @@ import {
   TextInput,
   ScrollView,
   FlatList,
-  TouchableOpacity
+  TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
-import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { Image } from "expo-image";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { Badge } from "react-native-paper";
@@ -23,13 +30,14 @@ import ProductsItem from "./ProductsItem";
 import { CartItem } from "./context/contextapi";
 import Animated, { FadeInDown } from "react-native-reanimated";
 const Home = () => {
-  const { carts } =
-  useContext(CartItem);
+  const { carts } = useContext(CartItem);
   const btnref = useRef(null);
   const [catagory, setCatagory] = useState([]);
   const [selectCatagory, setSelectCatagory] = useState(["All"]);
   const [limit, setLimit] = useState(5);
   const [mapCategory, setMapCategory] = useState([]);
+  const [loading, setLoading] = useState(false);
+  
 
   useEffect(() => {
     if (limit == 20) {
@@ -49,7 +57,8 @@ const Home = () => {
         "https://fakestoreapi.com/products/categories"
       );
       const data = await response.json();
-      setCatagory(data);
+      var x = data.reverse()
+      setCatagory(x);
     } catch (error) {
       Toast.show({
         type: "error",
@@ -82,6 +91,11 @@ const Home = () => {
       });
     }
   };
+  const LoadMore = () => {
+    setLoading(true)
+    setLimit((prev) => prev + 5)
+    setLoading(false)
+  }
 
   return (
     <ScrollView>
@@ -94,44 +108,40 @@ const Home = () => {
           <View style={Styles.iconsbox}>
             <TouchableOpacity onPress={() => router.push("/profile")}>
               <Image
-                source={{
-                  uri: "https://img.freepik.com/premium-photo/elevate-your-brand-with-friendly-avatar-that-reflects-professionalism-ideal-sales-managers_1283595-18531.jpg?semt=ais_hybrid",
-                }}
-                style={{ height: hp("8%"), width: wp("17%"), borderRadius: 50 }}
+                source={require("../assets/images/aarij.png")}
+                style={{ height: hp("7%"), width: wp("14%"), borderRadius: 50 }}
               />
             </TouchableOpacity>
             <TouchableOpacity
-  onPress={() => router.push('addtocart')}
-  style={{
-    position: 'relative', 
-    width: 50, // Adjust as per design
-    height: 50, // Adjust as per design
-    justifyContent: 'center', 
-    alignItems: 'center',
-  }}
->
-  <Badge
-    style={{
-      position: 'fived',
-      top: 7, 
-      backgroundColor: 'red',
-    }}
-  >
-    {carts.length}
-  </Badge>
-  <AntDesign
-    name="shoppingcart"
-    size={32}
-    color="black"
-  />
-</TouchableOpacity>
-
-           
+              onPress={() => router.push("addtocart")}
+              style={{
+                position: "relative",
+                width: 50, 
+                height: 50, 
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Badge
+                style={{
+                  position: "fived",
+                  top: 7,
+                  backgroundColor: "red",
+                }}
+              >
+                {carts.length}
+              </Badge>
+              <AntDesign name="shoppingcart" size={32} color="black" />
+            </TouchableOpacity>
           </View>
         </View>
         {/* input start here */}
         <Toast />
-        <TouchableOpacity activeOpacity={0.7} style={Styles.searchbox} onPress={() => router.push('/search')}>
+        <TouchableOpacity
+          activeOpacity={0.7}
+          style={Styles.searchbox}
+          onPress={() => router.push("/search")}
+        >
           <View style={Styles.Innerbox}>
             <AntDesign name="search1" size={32} color="black" />
             <TextInput
@@ -150,26 +160,22 @@ const Home = () => {
             style={Styles.swiper}
           >
             <Image
-              source={{
-                uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3EzOf7Y8QQ8yZ47Vw7kvVIVFktBJ2n1UN0w&s",
-              }}
-              contentFit="cover"
-              style={{ flex: 1 }}
-            />
-            <Image
-              source={{
-                uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3EzOf7Y8QQ8yZ47Vw7kvVIVFktBJ2n1UN0w&s",
-              }}
-              contentFit="cover"
+              source={require('../assets/images/baner.png')}
+              contentFit="fill"
               style={{ flex: 1 }}
             />
             <Image
               source={{
                 uri: "https://png.pngtree.com/thumb_back/fh260/background/20201015/pngtree-black-friday-sale-banner-pink-design-template-image_417566.jpg",
               }}
-              contentFit="cover"
+              contentFit="fill"
               style={{ flex: 1 }}
             />
+              <Image
+                source={require("../assets/images/img.webp")}
+                contentFit="fill"
+                style={{ flex: 1 }}
+              />
           </Swiper>
         </View>
         <View style={Styles.filterbox}>
@@ -202,28 +208,36 @@ const Home = () => {
           </ScrollView>
         </View>
         <Toast />
+        <View style={Styles.container}>
+      <View>
+        <Text style={Styles.title}>Top brands</Text>
+        <Text style={Styles.subtitle}>Arrivals</Text>
+      </View>
+      <TouchableOpacity>
+        <Text style={Styles.link}>See All</Text>
+      </TouchableOpacity>
+    </View>
         <FlatList
           numColumns={2}
           scrollEnabled={false}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{
             paddingBottom: 30,
-            paddingTop: 20,
+            paddingTop: 10,
             paddingHorizontal: wp("3%"),
             position: "relative",
           }}
           columnWrapperStyle={{ justifyContent: "space-between" }}
           data={mapCategory}
-          renderItem={({ item ,idx}) => (
-            <Animated.View
-            entering={FadeInDown.delay(idx*350).springify()}>
-            <ProductsItem
-              id={item.id}
-              img={item.image}
-              title={item.title}
-              price={item.price}
-              rating={item.rating.rate}
-            />
+          renderItem={({ item, idx }) => (
+            <Animated.View entering={FadeInDown.delay(idx * 350).springify()}>
+              <ProductsItem
+                id={item.id}
+                img={item.image}
+                title={item.title}
+                price={item.price}
+                rating={item.rating.rate}
+              />
             </Animated.View>
           )}
         />
@@ -239,7 +253,7 @@ const Home = () => {
           }}
         >
           <TouchableOpacity
-            onPress={() => setLimit((prev) => prev + 5)}
+            onPress={LoadMore}
             style={{
               height: hp("7%"),
               width: wp("70%"),
@@ -261,7 +275,7 @@ const Home = () => {
                 marginBottom: 2,
               }}
             >
-              Load More
+             { loading ? <ActivityIndicator size={50} color={"red"}/> :'Load More'}
             </Text>
           </TouchableOpacity>
         </View>
@@ -273,6 +287,25 @@ const Styles = StyleSheet.create({
   swiper: {
     height: hp("40%"),
     marginTop: 5,
+  },
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginHorizontal: 20, 
+    marginTop: 10,
+  },
+  title: {
+    fontWeight: 'bold',
+    fontSize: 20, 
+  },
+  subtitle: {
+    fontSize: 16, 
+  },
+  link: {
+    fontWeight: 'bold', 
+    fontSize: 16, 
+    color: 'red', 
   },
   filterMenu: {
     flexDirection: "row",
@@ -309,7 +342,7 @@ const Styles = StyleSheet.create({
   },
   innerBox: {
     paddingHorizontal: wp("3%"),
-    marginBottom: 30,
+    marginBottom: 20,
     marginVertical: 30,
     height: hp("10%"),
     width: wp("100%"),

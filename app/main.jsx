@@ -16,7 +16,7 @@ const Main = () => {
   }
   return (
     <View>
-       <Image source={require('../assets/getstarted.png')} style={{height:hp('105%'),width:wp('100%')}} />
+       <Image source={require('../assets/getstarted.png')} cachePolicy="memory-disk" style={{height:hp('105%'),width:wp('100%')}} />
        <View style={Styles.main}>
         <Text style={Styles.text} >You want</Text>
         <Text style={Styles.text} >anything here</Text>

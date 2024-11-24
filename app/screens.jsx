@@ -29,7 +29,7 @@ const Screens = () => {
       {
         backgroundColor: '#fff',
         image:(
-            <Image source={require('../assets/fashion2.png')} style={{height:hp('40%'),width:wp('80%')}}/>
+            <Image source={require('../assets/fashion2.png')} style={{height:hp('40%'),width:wp('90%')}}/>
         ),
         title: 'Make Payment',
         subtitle: 'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.',

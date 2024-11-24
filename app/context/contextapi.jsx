@@ -4,7 +4,6 @@ export const CartItem = createContext();
 
 export default function CartProvider({ children }) {
   const [carts, setCarts] = useState([]);
-  console.log("🚀 ~ CartProvider ~ carts:", carts)
 
   const handleCartItems = (items) => {
     let arr = carts;
